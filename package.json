@@ -1,0 +1,25 @@
+{
+  "name": "beer-pong-bot",
+  "version": "0.0.1",
+  "description": "a bot for beer pong, duh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wsm95/beer-pong-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wsm95/beer-pong-bot/issues"
+  },
+  "homepage": "https://github.com/wsm95/beer-pong-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1"
+  }
+}
