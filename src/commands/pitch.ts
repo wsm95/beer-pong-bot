@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import { Command } from "../Command";
 import { guessDictionary, scoreDictionary } from "../Bot";
+import { printScoreboard } from "./scoreBoard";
 
 const diff = (guess: number, pitch: number): number => {
   let diff = Math.abs(pitch - guess);
@@ -55,19 +56,21 @@ export const Pitch: Command = {
 
     let content = "";
     for (const userId in guessDictionary) {
-      const guessUser = guessDictionary[userId];
+      const { guess, member } = guessDictionary[userId];
 
-      const difference = diff(pitch, guessUser.guess);
+      const difference = diff(pitch, guess);
       const score = calcScore(difference);
 
       if (!scoreDictionary[userId]) {
-        scoreDictionary[userId] = { score: 0, tag: guessUser.tag };
+        scoreDictionary[userId] = { score: 0, member };
       }
       scoreDictionary[userId].score += score;
 
-      content += `${guessUser.tag} guessed ${guessUser.guess} for a diff of ${difference}, scoring ${score}\n`;
+      content += `${member?.nickname} guessed ${guess} for a diff of ${difference}, scoring ${score}\n`;
       delete guessDictionary[userId];
     }
+
+    content += "\n\n" + printScoreboard();
 
     await interaction.followUp({
       ephemeral: true,

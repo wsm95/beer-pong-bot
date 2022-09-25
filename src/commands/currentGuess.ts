@@ -14,13 +14,13 @@ export const CurrentGuess: Command = {
   type: ApplicationCommandType.ChatInput,
   run: async (_: Client, interaction: CommandInteraction) => {
     let content = "";
-    if (!guessDictionary[interaction.user.id]) {
-      content = `${interaction.user.tag} does not have a current guess`;
-    }
 
-    content = `${interaction.user.tag} current guess is ${
-      guessDictionary[interaction.user.id].guess
-    }`;
+    if (!guessDictionary[interaction.user.id]) {
+      content = `Submit a guess!`;
+    } else {
+      const { guess, member } = guessDictionary[interaction.user.id];
+      content = `${member?.nickname}'s current guess is ${guess}`;
+    }
 
     await interaction.followUp({
       ephemeral: true,
