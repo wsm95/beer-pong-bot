@@ -25,7 +25,7 @@ export const Guess: Command = {
     const guess = interaction.options.get("guess")?.value! as number;
     const member = await interaction.guild?.members.fetch(interaction.user);
 
-    const content = `${member?.nickname} throws in a guess of: ${guess}`;
+    const content = `${member?.displayName} throws in a guess of: ${guess}`;
     guessDictionary[interaction.user.id] = { guess, member };
 
     await interaction.followUp({

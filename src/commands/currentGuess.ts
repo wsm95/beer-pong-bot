@@ -19,7 +19,8 @@ export const CurrentGuess: Command = {
       content = `Submit a guess!`;
     } else {
       const { guess, member } = guessDictionary[interaction.user.id];
-      content = `${member?.nickname}'s current guess is ${guess}`;
+      console.log(member);
+      content = `${member?.displayName}'s current guess is ${guess}`;
     }
 
     await interaction.followUp({

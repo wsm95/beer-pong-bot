@@ -4,7 +4,8 @@
   "description": "a bot for beer pong, duh",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/Bot.ts"
+    "start": "ts-node src/Bot.ts",
+    "stay-on-start": "tsc && pm2 start dist/Bot.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   "homepage": "https://github.com/wsm95/beer-pong-bot#readme",
   "dependencies": {
     "discord.js": "^14.4.0",
-    "dotenv": "^16.0.2"
+    "dotenv": "^16.0.2",
+    "pm2": "^5.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.18",

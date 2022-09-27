@@ -5,7 +5,7 @@ import { scoreDictionary } from "../Bot";
 export const printScoreboard = (): string => {
   let scoreBoard = "Current scoreboard\n\n";
   for (const userId in scoreDictionary) {
-    scoreBoard += `${scoreDictionary[userId].member?.nickname}: ${scoreDictionary[userId].score}`;
+    scoreBoard += `${scoreDictionary[userId].member?.nickname}: ${scoreDictionary[userId].score}\n`;
   }
 
   return scoreBoard;
