@@ -8,7 +8,7 @@ Discord bot for playing beer pong (shadowball) in fake baseball.
 * returns a greeting  
 > /guess guess: number  
 * submit a guess  
-> /pitch pitch: guess  
+> /pitch pitch: number  
 * submit the pitch  
 > /scoreboard  
 * output current scores  
