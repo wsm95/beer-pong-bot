@@ -6,7 +6,7 @@ export const RandomGuess: Command = {
   description: "Returns a random guess",
   type: ApplicationCommandType.ChatInput,
   run: async (client: Client, interaction: CommandInteraction) => {
-    const content = "What about.....69?";
+    const content = "What about.....69??";
 
     await interaction.followUp({
       ephemeral: true,
