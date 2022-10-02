@@ -2,7 +2,7 @@ import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
 import { Command } from "../Command";
 
 export const RandomGuess: Command = {
-  name: "randomGuess",
+  name: "random_guess",
   description: "Returns a random guess",
   type: ApplicationCommandType.ChatInput,
   run: async (client: Client, interaction: CommandInteraction) => {
