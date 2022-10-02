@@ -6,6 +6,7 @@ import { Guess } from "./commands/guess";
 import { CurrentGuess } from "./commands/currentGuess";
 import { Pitch } from "./commands/pitch";
 import { ScoreBoard } from "./commands/scoreBoard";
+import { RandomGuess } from "./commands/randomGuess";
 
 export const Commands: Command[] = [
   Hello,
@@ -15,4 +16,5 @@ export const Commands: Command[] = [
   CurrentGuess,
   Pitch,
   ScoreBoard,
+  RandomGuess,
 ];
