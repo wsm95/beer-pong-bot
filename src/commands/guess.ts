@@ -6,7 +6,7 @@ import {
   ApplicationCommandOptionType,
 } from "discord.js";
 import { Command } from "../Command";
-import { guessDictionary } from "../Bot";
+import { addGuess, getCurrentGame } from "../database/databaseUtils";
 
 export const Guess: Command = {
   name: "guess",
@@ -25,8 +25,15 @@ export const Guess: Command = {
     const guess = interaction.options.get("guess")?.value! as number;
     const member = await interaction.guild?.members.fetch(interaction.user);
 
-    const content = `${member?.displayName} throws in a guess of: ${guess}`;
-    guessDictionary[interaction.user.id] = { guess, member };
+    let content = "";
+    const currentGame = await getCurrentGame();
+    if (currentGame) {
+      await addGuess(currentGame, member?.id!, guess);
+
+      content = `${member?.displayName} throws in a guess of: ${guess}`;
+    } else {
+      content = "No games currently started!";
+    }
 
     await interaction.followUp({
       ephemeral: true,
