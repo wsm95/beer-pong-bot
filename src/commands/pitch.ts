@@ -25,23 +25,47 @@ const diff = (guess: number, pitch: number): number => {
 };
 
 const calcScore = (diff: number) => {
-  if (diff === 0) {
+  // 0-5: 10
+  // 6-30: 8
+  // 31-60: 6
+  // 61-90: 4
+  // 91-150: 2
+  // 151-200: 1
+  // 201-300: 0
+  // 301-350: -1
+  // 351-410: -2
+  // 411-440: -4
+  // 441-470: -6
+  // 471-495: -8
+  // 496-500: -10
+
+  if (diff <= 5) {
     return 10;
-  } else if (diff < 30) {
-    return 7;
-  } else if (diff < 75) {
-    return 5;
-  } else if (diff < 150) {
-    return 3;
-  } else if (diff < 200) {
+  } else if (diff <= 30) {
+    return 8;
+  } else if (diff <= 60) {
+    return 6;
+  } else if (diff <= 90) {
+    return 4;
+  } else if (diff <= 150) {
+    return 2;
+  } else if (diff <= 200) {
     return 1;
-  } else if (diff < 300) {
+  } else if (diff <= 300) {
     return 0;
-  } else if (diff === 500) {
-    return -3;
+  } else if (diff <= 350) {
+    return -1;
+  } else if (diff <= 410) {
+    return -2;
+  } else if (diff <= 440) {
+    return -4;
+  } else if (diff <= 470) {
+    return -6;
+  } else if (diff <= 495) {
+    return -8;
   }
 
-  return -1;
+  return -10;
 };
 
 export const Pitch: Command = {

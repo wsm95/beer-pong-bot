@@ -13,7 +13,7 @@ export const EndGame: Command = {
     const currentGame = await getCurrentGame();
     if (currentGame) {
       content =
-        "Alright fake beer ponger, that's the game! Lets see how we all did.\n\n";
+        "Alright fake beer pongers, that's the game! Lets see how we all did.\n\n";
 
       content += await printScoreboard(currentGame, interaction);
 
