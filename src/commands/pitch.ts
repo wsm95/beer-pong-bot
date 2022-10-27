@@ -6,8 +6,14 @@ import {
   ApplicationCommandOptionType,
 } from "discord.js";
 import { Command } from "../Command";
-import { guessDictionary, scoreDictionary } from "../Bot";
 import { printScoreboard } from "./scoreBoard";
+import {
+  addPitch,
+  getAllCurrentGuesses,
+  getCurrentGame,
+  updateGuess,
+  updateScore,
+} from "../database/databaseUtils";
 
 const diff = (guess: number, pitch: number): number => {
   let diff = Math.abs(pitch - guess);
@@ -53,24 +59,38 @@ export const Pitch: Command = {
   ],
   run: async (_: Client, interaction: CommandInteraction) => {
     const pitch = interaction.options.get("pitch")?.value! as number;
+    let content = "The pitch is in! Lets ping some fake beer pongers.\n\n";
+    content += "**Pitch: " + pitch + "**\n";
 
-    let content = "";
-    for (const userId in guessDictionary) {
-      const { guess, member } = guessDictionary[userId];
+    const currentGame = await getCurrentGame();
+    if (currentGame) {
+      const currentGuesses = await getAllCurrentGuesses(currentGame);
+      for (const currentGuess of currentGuesses) {
+        console.log("currentGuess: " + JSON.stringify(currentGuess, null, 4));
 
-      const difference = diff(pitch, guess);
-      const score = calcScore(difference);
+        const difference = diff(pitch, currentGuess.guess);
+        const score = calcScore(difference);
 
-      if (!scoreDictionary[userId]) {
-        scoreDictionary[userId] = { score: 0, member };
+        console.log("differnce: " + difference);
+        console.log("score: " + score);
+
+        await updateGuess(
+          currentGame,
+          currentGuess.player_id,
+          currentGuess.id,
+          score
+        );
+
+        await updateScore(currentGame, currentGuess.player_id, score);
+
+        content += `<@${currentGuess.player_id}> guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`;
       }
-      scoreDictionary[userId].score += score;
 
-      content += `${member?.nickname} guessed ${guess} for a diff of ${difference}, scoring ${score}\n`;
-      delete guessDictionary[userId];
+      await addPitch(currentGame, pitch);
+      content += "\n" + (await printScoreboard(currentGame, interaction));
+    } else {
+      content = "No games currently started!";
     }
-
-    content += "\n\n" + printScoreboard();
 
     await interaction.followUp({
       ephemeral: true,

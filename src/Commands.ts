@@ -7,14 +7,16 @@ import { CurrentGuess } from "./commands/currentGuess";
 import { Pitch } from "./commands/pitch";
 import { ScoreBoard } from "./commands/scoreBoard";
 import { RandomGuess } from "./commands/randomGuess";
+import { StartGame } from "./commands/startGame";
+import { EndGame } from "./commands/endGame";
 
 export const Commands: Command[] = [
   Hello,
-  User,
-  Server,
   Guess,
   CurrentGuess,
   Pitch,
   ScoreBoard,
   RandomGuess,
+  StartGame,
+  EndGame,
 ];

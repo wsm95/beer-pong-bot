@@ -2,6 +2,8 @@ import "dotenv/config";
 import { Client, GuildMember } from "discord.js";
 import ready from "./listeners/ready";
 import interactionCreate from "./listeners/interactionCreate";
+import { Database } from "sqlite3";
+import { initializeDatabase } from "./database/databaseUtils";
 
 export const scores: { [userId: string]: number } = {};
 export const guessDictionary: {
@@ -10,6 +12,8 @@ export const guessDictionary: {
 export const scoreDictionary: {
   [userId: string]: { score: number; member: GuildMember | undefined };
 } = {};
+
+initializeDatabase().then(() => {});
 
 console.log("Bot is starting...");
 

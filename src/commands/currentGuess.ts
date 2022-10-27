@@ -1,26 +1,30 @@
-import {
-  CommandInteraction,
-  Client,
-  ApplicationCommandType,
-  ApplicationCommandStringOption,
-  ApplicationCommandNumericOption,
-} from "discord.js";
+import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
 import { Command } from "../Command";
-import { guessDictionary } from "../Bot";
+import {
+  getCurrentGame,
+  addGuess,
+  getCurrentGuess,
+} from "../database/databaseUtils";
 
 export const CurrentGuess: Command = {
   name: "current_guess",
   description: "Responds with your current guess",
   type: ApplicationCommandType.ChatInput,
   run: async (_: Client, interaction: CommandInteraction) => {
-    let content = "";
+    const member = await interaction.guild?.members.fetch(interaction.user);
 
-    if (!guessDictionary[interaction.user.id]) {
-      content = `Submit a guess!`;
+    let content = "";
+    const currentGame = await getCurrentGame();
+    if (currentGame) {
+      const currentGuess = await getCurrentGuess(currentGame, member?.id!);
+
+      if (currentGuess) {
+        content = `${member?.displayName} currently has a guess of: ${currentGuess}`;
+      } else {
+        content = "You have no current guesses!";
+      }
     } else {
-      const { guess, member } = guessDictionary[interaction.user.id];
-      console.log(member);
-      content = `${member?.displayName}'s current guess is ${guess}`;
+      content = "No games currently started!";
     }
 
     await interaction.followUp({
