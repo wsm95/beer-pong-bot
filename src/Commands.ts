@@ -9,6 +9,7 @@ import { ScoreBoard } from "./commands/scoreBoard";
 import { RandomGuess } from "./commands/randomGuess";
 import { StartGame } from "./commands/startGame";
 import { EndGame } from "./commands/endGame";
+import { Scoring } from "./commands/scoring";
 
 export const Commands: Command[] = [
   Hello,
@@ -19,4 +20,5 @@ export const Commands: Command[] = [
   RandomGuess,
   StartGame,
   EndGame,
+  Scoring,
 ];

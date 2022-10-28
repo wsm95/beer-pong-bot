@@ -83,7 +83,8 @@ export const Pitch: Command = {
   ],
   run: async (_: Client, interaction: CommandInteraction) => {
     const pitch = interaction.options.get("pitch")?.value! as number;
-    let content = "The pitch is in! Lets ping some fake beer pongers.\n\n";
+    let content =
+      "The pitch is in! Lets ping some fake beer pongers. <@&1035382395706298388>\n\n";
     content += "**Pitch: " + pitch + "**\n";
 
     const currentGame = await getCurrentGame();
@@ -107,7 +108,10 @@ export const Pitch: Command = {
 
         await updateScore(currentGame, currentGuess.player_id, score);
 
-        content += `<@${currentGuess.player_id}> guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`;
+        var user = await interaction.guild?.members.fetch(
+          currentGuess.player_id
+        );
+        content += `${user?.displayName} guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`;
       }
 
       await addPitch(currentGame, pitch);
