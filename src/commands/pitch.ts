@@ -89,6 +89,7 @@ export const Pitch: Command = {
 
     const currentGame = await getCurrentGame();
     if (currentGame) {
+      const scoreContentTuple: [number, string][] = [];
       const currentGuesses = await getAllCurrentGuesses(currentGame);
       for (const currentGuess of currentGuesses) {
         console.log("currentGuess: " + JSON.stringify(currentGuess, null, 4));
@@ -111,10 +112,20 @@ export const Pitch: Command = {
         var user = await interaction.guild?.members.fetch(
           currentGuess.player_id
         );
-        content += `${user?.displayName} guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`;
+
+        scoreContentTuple.push([
+          score,
+          `${user?.displayName} guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`,
+        ]);
       }
 
+      content += scoreContentTuple
+        .sort((a, b) => b[0] - a[0])
+        .map((t) => t[1])
+        .join("");
+
       await addPitch(currentGame, pitch);
+
       content += "\n" + (await printScoreboard(currentGame, interaction));
     } else {
       content = "No games currently started!";
