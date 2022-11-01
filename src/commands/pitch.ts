@@ -120,12 +120,11 @@ export const Pitch: Command = {
       }
 
       content += diffContentTuple
-        .sort((a, b) => b[0] - a[0])
+        .sort((a, b) => a[0] - b[0])
         .map((t) => t[1])
         .join("");
 
       await addPitch(currentGame, pitch);
-
       content += "\n" + (await printScoreboard(currentGame, interaction));
     } else {
       content = "No games currently started!";
