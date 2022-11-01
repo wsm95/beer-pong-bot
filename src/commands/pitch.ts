@@ -89,7 +89,7 @@ export const Pitch: Command = {
 
     const currentGame = await getCurrentGame();
     if (currentGame) {
-      const scoreContentTuple: [number, string][] = [];
+      const diffContentTuple: [number, string][] = [];
       const currentGuesses = await getAllCurrentGuesses(currentGame);
       for (const currentGuess of currentGuesses) {
         console.log("currentGuess: " + JSON.stringify(currentGuess, null, 4));
@@ -113,13 +113,13 @@ export const Pitch: Command = {
           currentGuess.player_id
         );
 
-        scoreContentTuple.push([
-          score,
+        diffContentTuple.push([
+          difference,
           `${user?.displayName} guessed ${currentGuess.guess} for a diff of ${difference}, scoring ${score}\n`,
         ]);
       }
 
-      content += scoreContentTuple
+      content += diffContentTuple
         .sort((a, b) => b[0] - a[0])
         .map((t) => t[1])
         .join("");
