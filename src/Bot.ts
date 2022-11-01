@@ -21,6 +21,10 @@ const token = process.env["DISCORD_TOKEN"];
 
 const client = new Client({
   intents: [],
+  allowedMentions: {
+    parse: ["roles"],
+    repliedUser: false,
+  },
 });
 
 ready(client);
